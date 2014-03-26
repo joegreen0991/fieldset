@@ -23,6 +23,8 @@ class HtmlTag {
     public function setName($name)
     {
         $this->tagName = $name;
+        
+        return $this;
     }
 
     public function getTagName()
@@ -33,6 +35,8 @@ class HtmlTag {
     public function setContainer($bool = true)
     {
         $this->tagContainer = $bool;
+        
+        return $this;
     }
     
     public function setAttributes(array $attributes)
@@ -41,6 +45,8 @@ class HtmlTag {
         {
             $this->setAttribute($attribute, $value);
         }
+        
+        return $this;
     }
 
     public function setAttribute($name, $value = null)
@@ -52,6 +58,8 @@ class HtmlTag {
         }
 
         $this->tagAttr[$name] = $value;
+        
+        return $this;
     }
     
     public function getAttribute($name)
@@ -76,6 +84,8 @@ class HtmlTag {
         $this->tagContainer = true;
 
         $this->tagText = $text;
+        
+        return $this;
     }
 
     
