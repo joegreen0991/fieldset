@@ -1,0 +1,15 @@
+{
+    "name": "joegreen0991/fieldset",
+    "type": "library",
+    "description": "A Scaffold System",
+    "autoload": {
+        "psr-0": { 
+            "Fieldset": "src"
+         }
+    },
+    "minimum-stability": "dev",
+    "require" : {
+       "raftalks/form" : "*",
+       "joegreen0991/validation": "dev-master"
+    }
+}
