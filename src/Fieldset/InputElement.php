@@ -48,7 +48,7 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
     {
         if($this->composer)
         {
-            $return = $this->composer($this, $this->input, $this->label);
+            $return = {$this->composer}($this, $this->input, $this->label);
             
             $return and $this->addTag($return);
         }
