@@ -37,6 +37,13 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
         return new ValidHtmlTag($type, $attributes);
     }
     
+    public function setComposer(Closure $callback)
+    {
+        $this->composer = $callback;
+        
+        return $this;
+    }
+    
     protected function tagToString($level = 1)
     {
         if($this->composer)
