@@ -45,20 +45,4 @@ class ValidHtmlTag extends HtmlTag {
         }
     }
 
-    /*
-    public function __call($method, $args)
-    {
-        $name = strtolower(substr($method, 3));
-
-        if (strpos($method, 'set') === 0)
-        {
-            return $this->setAttribute($name, $args[0]);
-        }
-
-        if (strpos($method, 'get') === 0)
-        {
-            return $this->getAttribute($name);
-        }
-    }
-*/
 }
