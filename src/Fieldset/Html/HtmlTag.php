@@ -220,4 +220,39 @@ class HtmlTag {
     {
         return $this->render();
     }
+    
+    public function __call($method, $args)
+    {
+        $name = strtolower(substr($method, 3));
+
+        if (strpos($method, 'set') === 0)
+        {
+            return $this->setAttribute($name, $args[0]);
+        }
+
+        if (strpos($method, 'get') === 0)
+        {
+            return $this->getAttribute($name);
+        }
+    }
+    
+    public function flatten()
+    {
+        if(!count($this->tagChildren))
+        {
+            return array($this);
+        }
+        
+        $flat = array();
+        
+        foreach($this->children() as $child)
+        {
+            foreach($child->flatten() as $flattened)
+            {
+                $flat[] = $flattened;
+            }
+        }
+        
+        return $flat;
+    }
 }

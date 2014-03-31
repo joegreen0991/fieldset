@@ -19,7 +19,7 @@ class Fieldset extends ValidHtmlTag implements FormElementInterface
      */
     public function populate(array $data)
     {
-        foreach ($this->children() as $element) 
+        foreach ($this->flatten() as $element) 
         {
             if($element instanceof FormElementInterface)
             {
