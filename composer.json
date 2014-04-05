@@ -9,7 +9,6 @@
     },
     "minimum-stability": "dev",
     "require" : {
-       "raftalks/form" : "*",
-       "joegreen0991/validation": "dev-master"
+
     }
 }
