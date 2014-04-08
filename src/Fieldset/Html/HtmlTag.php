@@ -192,7 +192,9 @@ class HtmlTag {
      */ 
     protected function attributeToString($attr) {
 
-        $attr = array_filter($attr);
+        $attr = array_filter($attr, function($value){
+            return value !== null;
+        });
         
         foreach ($attr as $k => $v) 
         {
