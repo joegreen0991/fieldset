@@ -29,6 +29,18 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
         
         $this->input = $this->tag($type, $attributes);
         
+        if(strtolower($type) === 'select' && isset($attributes['options']))
+        {
+            foreach($attributes['options'] as $k => $v)
+            {
+                $this->input->addTag(
+                    $this->tag('option', array('value' => $k, 'name' => $v))
+                );
+            }
+
+            unset($attributes['options']);
+        }
+        
         parent::__construct($containerTag);
     }
     
