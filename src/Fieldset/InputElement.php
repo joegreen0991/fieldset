@@ -27,8 +27,8 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
             unset($attributes['label']);
         }
         
-        $this->input = $this->tag($type, $attributes);
-        
+        $this->input = $this->tag($type);
+
         if(strtolower($type) === 'select' && isset($attributes['options']))
         {
             foreach($attributes['options'] as $k => $v)
@@ -40,6 +40,8 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
 
             unset($attributes['options']);
         }
+
+        $this->input->setAttributes($attributes);
         
         parent::__construct($containerTag);
     }
