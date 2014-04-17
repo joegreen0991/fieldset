@@ -44,5 +44,15 @@ class ValidHtmlTag extends HtmlTag {
             $this->setAttribute($attribute, $value);
         }
     }
+    
+    public function setAttribute($attribute, $value = null)
+    {
+        if($this->getTagName() === 'textarea' && $attribute === 'value')
+        {
+            return $this->addText($value);
+        }
+
+        return parent::setAttribute($attribute, $value);
+    }
 
 }
