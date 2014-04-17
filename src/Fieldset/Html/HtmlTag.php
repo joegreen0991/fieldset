@@ -198,6 +198,8 @@ class HtmlTag {
         
         foreach ($attr as $k => $v) 
         {
+            $v = htmlentities($v);
+            
             $attr[$k] = is_numeric($k) ? $v : "$k=\"$v\"";
         }
         
