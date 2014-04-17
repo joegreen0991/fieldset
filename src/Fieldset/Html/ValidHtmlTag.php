@@ -52,6 +52,26 @@ class ValidHtmlTag extends HtmlTag {
             return $this->addText($value);
         }
 
+        $keys = array(
+            'select' => 'selected',
+            'checkbox' => 'checked',
+            'radio' => 'checked'
+        );
+
+        if(isset($keys[$this->getTagName()]) && $attribute === 'value')
+        {
+            foreach($this->children() as $child)
+            {
+                if($child->getAttribute('value') === $value)
+                {
+                    $verb = $keys[$this->getTagName()];
+                    $child->setAttribute($verb,$verb);
+
+                    return;
+                }
+            }
+        }
+
         return parent::setAttribute($attribute, $value);
     }
 
