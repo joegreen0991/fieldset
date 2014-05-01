@@ -29,13 +29,31 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
         
         $this->input = $this->tag($type);
 
-        if(strtolower($type) === 'select' && isset($attributes['options']))
+        if(in_array(strtolower($type), array('select', 'radio')) && isset($attributes['options']))
         {
+
+            if ($type == 'radio') {
+                $this->input = $this->tag('div')->setAttribute('class', 'pull-right');
+            }
+
+            $copy = $attributes;
+            unset($copy['options']);
             foreach($attributes['options'] as $k => $v)
             {
-                $this->input->addTag(
-                    $this->tag('option', array('value' => $k, 'name' => $v))
-                );
+                if ($type == 'select') {
+                    $this->input->addTag(
+                        $this->tag('option', array('value' => $k, 'name' => $v))
+                    );
+                } else {
+                    $copy['value'] = $k;
+                    $copy['id'] = $attributes['name'] . '-' . $k;
+                    $this->input->addTag(
+                        $this->tag('radio', $copy)
+                    );
+                    $this->input->addTag(
+                        $this->tag('label', $v)->setAttribute('for', $copy['id'])
+                    );
+                }
             }
 
             unset($attributes['options']);
