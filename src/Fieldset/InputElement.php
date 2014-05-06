@@ -12,7 +12,9 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
     protected $label;
     
     protected $composer;
-        
+    
+    private $isRadio = false;
+    
     public function __construct($type, array $attributes = array(), $containerTag = 'div')
     {
         isset($attributes['id']) or $attributes['id'] = null;
@@ -47,8 +49,10 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
                 } else {
                     $copy['value'] = $k;
                     $copy['id'] = $attributes['name'] . '-' . $k;
+                    $input = $this->tag('radio', $copy);
+                    $this->isRadio[] = $input;
                     $this->input->addTag(
-                        $this->tag('radio', $copy)
+                        $input
                     );
                     $this->input->addTag(
                         $this->tag('label', $v)->setAttribute('for', $copy['id'])
@@ -95,9 +99,19 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
     
     public function populate(array $data)
     {
-        if($name = $this->input->getAttribute('name'))
+        if(count($this->isRadio))
+        {
+            foreach($this->isRadio as $input)
+            {
+                if($name = $input->getAttribute('name') && isset($data[$name]))
+                {  
+                    $input->setAttribute('value', $data[$name]);
+                }
+            }
+        }
+        elseif($name = $this->input->getAttribute('name') && isset($data[$name]))
         {  
-            isset($data[$name]) and $this->input->setAttribute('value', $data[$name]);
+            $this->input->setAttribute('value', $data[$name]);
         }
     }
     
