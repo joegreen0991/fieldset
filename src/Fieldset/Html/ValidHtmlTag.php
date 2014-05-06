@@ -62,7 +62,7 @@ class ValidHtmlTag extends HtmlTag {
         {
             foreach($this->children() as $child)
             {
-                if($child->getAttribute('value') === $value)
+                if($child->getAttribute('value') == $value)
                 {
                     $verb = $keys[$this->getTagName()];
                     $child->setAttribute($verb,$verb);
