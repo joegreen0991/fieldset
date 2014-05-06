@@ -13,7 +13,7 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
     
     protected $composer;
     
-    private $isRadio = false;
+    private $isRadio = array();
     
     public function __construct($type, array $attributes = array(), $containerTag = 'div')
     {
