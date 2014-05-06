@@ -103,15 +103,15 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
         {
             foreach($this->isRadio as $input)
             {
-                if($name = $input->getAttribute('name') && isset($data[$name]))
+                if($name = $input->getAttribute('name'))
                 {  
-                    $input->setAttribute('value', $data[$name]);
+                    isset($data[$name]) && $input->setAttribute('value', $data[$name]);
                 }
             }
         }
-        elseif($name = $this->input->getAttribute('name') && isset($data[$name]))
+        elseif($name = $this->input->getAttribute('name'))
         {  
-            $this->input->setAttribute('value', $data[$name]);
+            isset($data[$name]) && $this->input->setAttribute('value', $data[$name]);
         }
     }
     
