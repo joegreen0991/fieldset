@@ -12,9 +12,7 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
     protected $label;
     
     protected $composer;
-    
-    private $isRadio = array();
-    
+
     public function __construct($type, array $attributes = array(), $containerTag = 'div')
     {
         isset($attributes['id']) or $attributes['id'] = null;
@@ -28,35 +26,38 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
             
             unset($attributes['label']);
         }
+
+        $type = strtolower($type);
         
         $this->input = $this->tag($type);
 
-        if(in_array(strtolower($type), array('select', 'radio')) && isset($attributes['options']))
+        if(in_array($type, array('select', 'radio')) && isset($attributes['options']))
         {
 
             if ($type == 'radio') {
-                $this->input = $this->tag('div')->setAttribute('class', 'pull-right');
+                $this->input = $this->tag('div', array(
+                    'data-fieldset' => 'radio-group'
+                ));
+                $this->input->setOriginalName($type);
             }
 
             $copy = $attributes;
+
             unset($copy['options']);
+
             foreach($attributes['options'] as $k => $v)
             {
                 if ($type == 'select') {
-                    $this->input->addTag(
-                        $this->tag('option', array('value' => $k, 'name' => $v))
-                    );
+                    $this->input->addTag($this->tag('option', array('value' => $k, 'name' => $v)));
                 } else {
-                    $copy['value'] = $k;
-                    $copy['id'] = $attributes['name'] . '-' . $k;
-                    $input = $this->tag('radio', $copy);
-                    $this->isRadio[] = $input;
-                    $this->input->addTag(
-                        $input
-                    );
-                    $this->input->addTag(
-                        $this->tag('label', $v)->setAttribute('for', $copy['id'])
-                    );
+
+                    $copy = array('value' => $k,'id' => $attributes['name'] . '-' . $k) + $copy;
+
+                    $this->input->addTag($this->tag('radio', $copy));
+
+                    $this->input->addTag($this->tag('label', $v)->setAttribute('for', $copy['id']));
+
+                    unset($attributes['type']);
                 }
             }
 
@@ -99,17 +100,7 @@ class InputElement extends ValidHtmlTag implements FormElementInterface
     
     public function populate(array $data)
     {
-        if(count($this->isRadio))
-        {
-            foreach($this->isRadio as $input)
-            {
-                if($name = $input->getAttribute('name'))
-                {  
-                    isset($data[$name]) && $input->setAttribute('value', $data[$name]);
-                }
-            }
-        }
-        elseif($name = $this->input->getAttribute('name'))
+        if($name = $this->input->getAttribute('name'))
         {  
             isset($data[$name]) && $this->input->setAttribute('value', $data[$name]);
         }
