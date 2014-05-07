@@ -61,14 +61,22 @@ class HtmlTag {
         
         return $this;
     }
-
-    public function setAttribute($name, $value = null)
+    
+    public function appendAttribute($name, $value = null)
     {
         if (isset($this->tagAttr[$name]))
         {
             $attr = $this->tagAttr[$name] . ' ' . $value;
             $value = $this->removeDuplicateWords($attr);
         }
+
+        $this->tagAttr[$name] = $value;
+        
+        return $this;
+    }
+
+    public function setAttribute($name, $value = null)
+    {
 
         $this->tagAttr[$name] = $value;
         
