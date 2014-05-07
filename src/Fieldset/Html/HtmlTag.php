@@ -8,6 +8,7 @@ class HtmlTag {
     private $tagContOpen = '<[@TAG][@ATTR]>';
     private $tagContClose = '</[@TAG]>';
     private $tagName = '';
+    private $originalTagName = null;
     private $tagAttr = array();
     private $tagContainer = false; //boolean defines if tag is containing other tags
     protected $tagChildren = array();
@@ -27,9 +28,21 @@ class HtmlTag {
         return $this;
     }
 
+    public function setOriginalName($name)
+    {
+        $this->originalTagName = $name;
+
+        return $this;
+    }
+
     public function getTagName()
     {
         return $this->tagName;
+    }
+
+    public function getOriginalTagName()
+    {
+        return $this->originalTagName ?: $this->tagName;
     }
     
     public function setContainer($bool = true)
