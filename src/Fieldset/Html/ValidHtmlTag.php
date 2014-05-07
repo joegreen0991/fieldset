@@ -58,13 +58,13 @@ class ValidHtmlTag extends HtmlTag {
             'radio' => 'checked'
         );
 
-        if(isset($keys[$this->getTagName()]) && $attribute === 'value')
+        if(isset($keys[$this->getOriginalTagName()]) && $attribute === 'value')
         {
             foreach($this->children() as $child)
             {
                 if($child->getAttribute('value') == $value)
                 {
-                    $verb = $keys[$this->getTagName()];
+                    $verb = $keys[$this->getOriginalTagName()];
                     $child->setAttribute($verb,$verb);
 
                     return;
